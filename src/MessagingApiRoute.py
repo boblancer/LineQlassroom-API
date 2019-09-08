@@ -12,9 +12,9 @@ from linebot.models import (
 
 app = Blueprint('MessagingApiRoute', __name__)
 
-line_bot_api = LineBotApi('7ZhYcRofXp0gR++3VC0aXV+Xtt36XSsCtpqu8Hpwh/L2b70FE0wN5G2SkPW5QqjLMGobF9FXglqyxB3A+YotCPN5'
-                          'JZk2nzBYtiu76OxYnv9BBSmaUbLHW5hA2IG3odqJkrEwd2vFu3JC8s7g7VDajgdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('ff13ecf3c4dc16c47bee15857376aab4')
+line_bot_api = LineBotApi('XF9eRcyOk/nZd5hmo+e1/l3UL/sFMbaO3r0OHuSm0volMzYLoux5NshVwOdRlAaQBcrzw0h6tHkysVE4GppMm+tSbxRQ'
+                          'EHbE7hZnQpZrwYvZfSgJgL5kG/RQhvDcrljdKSJqMMaV3OdufeCPqWJrAwdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('a969bc64bdb41abc6f669c85893463a4')
 
 
 @app.route('/image')
