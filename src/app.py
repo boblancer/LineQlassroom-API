@@ -28,7 +28,6 @@ def webhook():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-    raise Exception(body)
     # handle webhook body
     try:
         handler.handle(body, signature)
@@ -38,7 +37,7 @@ def webhook():
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_message(event):
-    print("plspls")
+    raise Exception(event)
     message_content = line_bot_api.get_message_content(event.message.id)
     result = ""
     line_bot_api.reply_message(
@@ -53,6 +52,7 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    raise Exception(event)
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
