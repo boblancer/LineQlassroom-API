@@ -8,28 +8,29 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
-)
+    ImageMessage)
 
-image = Blueprint('MessagingApiRoute', __name__)
+app = Blueprint('MessagingApiRoute', __name__)
 
-line_bot_api = LineBotApi('XF9eRcyOk/nZd5hmo+e1/l3UL/sFMbaO3r0OHuSm0volMzYLoux5NshVwOdRlAaQBcrzw0h6tHkysVE4GppMm+tSbxRQE'
-                          +'HbE7hZnQpZrwYvZfSgJgL5kG/RQhvDcrljdKSJqMMaV3OdufeCPqWJrAwdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('a969bc64bdb41abc6f669c85893463a4')
+line_bot_api = LineBotApi('7ZhYcRofXp0gR++3VC0aXV+Xtt36XSsCtpqu8Hpwh/L2b70FE0wN5G2SkPW5QqjLMGobF9FXglqyxB3A+YotCPN5'
+                          'JZk2nzBYtiu76OxYnv9BBSmaUbLHW5hA2IG3odqJkrEwd2vFu3JC8s7g7VDajgdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('ff13ecf3c4dc16c47bee15857376aab4')
 
 
-@image.route('/image')
+@app.route('/image')
 def show():
+    print("bat")
     return jsonify({"Pokemon": "Go"})
 
 
-@image.route("/callback", methods=['POST'])
+@app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
 
     # get request body as text
     body = request.get_data(as_text=True)
-    image.logger.info("Request body: " + body)
+    app.logger.info("Request body: " + body)
 
     # handle webhook body
     try:
@@ -41,9 +42,17 @@ def callback():
     return 'OK'
 
 
-@image.add(MessageEvent, message=TextMessage)
+@handler.add(MessageEvent, message=ImageMessage)
 def handle_message(event):
+    print("plspls")
+    message_content = line_bot_api.get_message_content(event.message.id)
+    result = ""
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text="fuck"))
+    with open("../buffer", 'wb') as fd:
+        for chunk in message_content.iter_content():
+            fd.write(chunk)
+            result += str(chunk)
+    print({"content": result})
 
