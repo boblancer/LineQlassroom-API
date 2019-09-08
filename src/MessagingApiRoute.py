@@ -23,7 +23,7 @@ def show():
     return jsonify({"Pokemon": "Go"})
 
 
-@app.route("/callback", methods=['POST'])
+@app.route("/webhook", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
@@ -33,6 +33,7 @@ def callback():
     app.logger.info("Request body: " + body)
 
     # handle webhook body
+    raise Exception(event)
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
@@ -44,7 +45,7 @@ def callback():
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_message(event):
-    print("plspls")
+    raise Exception(event)
     message_content = line_bot_api.get_message_content(event.message.id)
     result = ""
     line_bot_api.reply_message(
