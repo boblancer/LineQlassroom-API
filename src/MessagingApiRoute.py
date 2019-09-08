@@ -44,7 +44,7 @@ def callback():
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_message(event):
-    current_app.logger.info("Processing image stream: " + event)
+    current_app.logger.info("Content id: " + event.message.id)
     message_content = line_bot_api.get_message_content(event.message.id)
     result = ""
     line_bot_api.reply_message(
