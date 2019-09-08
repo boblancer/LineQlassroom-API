@@ -1,4 +1,4 @@
-from flask import Flask , Blueprint, jsonify, abort, request
+from flask import Flask , Blueprint, jsonify, abort, request, current_app
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -30,10 +30,9 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    current_app.logger.info("Request body: " + body)
 
     # handle webhook body
-    raise Exception(body)
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
@@ -45,7 +44,7 @@ def callback():
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_message(event):
-    raise Exception(event)
+    current_app.logger.info("Processing image stream: " + event)
     message_content = line_bot_api.get_message_content(event.message.id)
     result = ""
     line_bot_api.reply_message(
@@ -55,5 +54,5 @@ def handle_message(event):
         for chunk in message_content.iter_content():
             fd.write(chunk)
             result += str(chunk)
-    print({"content": result})
+    current_app.logger.info("Result : " + result)
 
