@@ -3,7 +3,7 @@ from firebase_admin import credentials, firestore
 from google.cloud import storage
 import json
 
-with open('ServiceAccountSecretKey.jsob') as dataFile:
+with open('ServiceAccountSecretKey.json') as dataFile:
     data = dataFile.read()
     obj = data[data.find('{') : data.rfind('}')+1]
     jsonObj = json.loads(obj)
