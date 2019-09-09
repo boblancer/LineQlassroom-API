@@ -1,5 +1,6 @@
 from flask import Flask , Blueprint, jsonify, abort, request, current_app
-
+from os import path
+import src.DB
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -9,7 +10,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
     ImageMessage)
-
+import io
 app = Blueprint('MessagingApiRoute', __name__)
 
 line_bot_api = LineBotApi('XF9eRcyOk/nZd5hmo+e1/l3UL/sFMbaO3r0OHuSm0volMzYLoux5NshVwOdRlAaQBcrzw0h6tHkysVE4GppMm+tSbxRQ'
@@ -46,13 +47,14 @@ def callback():
 def handle_message(event):
     current_app.logger.info("Content id: " + event.message.id)
     message_content = line_bot_api.get_message_content(event.message.id)
-    result = ""
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="fuck"))
-    with open("../buffer", 'wb') as fd:
-        for chunk in message_content.iter_content():
-            fd.write(chunk)
-            result += str(chunk)
-    current_app.logger.info("Result : " + result)
+    temp_file = io.BytesIO()
+    for chunk in message_content.iter_content():
+        temp_file.write(chunk)
+        current_app.logger.info(chunk)
+
+    src.DB.upload_blob(temp_file)
+
 
