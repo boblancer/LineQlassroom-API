@@ -1,7 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 from google.cloud import storage
-from firebase import firebase
 import json
 
 with open('ServiceAccountSecretKey.jsob') as dataFile:
@@ -19,5 +18,5 @@ bucket = storage.get_bucket("gs://line-qlassroom-7bed0.appspot.com")
 def upload_blob(source):
     imageBlob = bucket.blob("foobar")
     imageBlob.upload_from_file(source)
-    
+
 
