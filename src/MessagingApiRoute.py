@@ -52,6 +52,7 @@ def handle_message(event):
         TextSendMessage(text="fuck"))
     temp_file = io.BytesIO()
     for chunk in message_content.iter_content():
+        current_app.logger.info("logging", chunk)
         temp_file.write(chunk)
         current_app.logger.info(chunk)
 
