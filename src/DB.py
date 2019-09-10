@@ -16,7 +16,7 @@ firestore_db = firestore.client()
 '''
 
 storage = storage.Client()
-bucket = storage.get_bucket("gs://line-qlassroom-7bed0.appspot.com")
+bucket = storage.get_bucket("line-qlassroom-7bed0.appspot.com")
 
 def upload_blob(source):
     imageBlob = bucket.blob("foobar")
