@@ -50,12 +50,12 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="fuck"))
-    temp_file = io.BytesIO()
-    for chunk in message_content.iter_content():
-        current_app.logger.info("logging", chunk)
-        temp_file.write(chunk)
-        current_app.logger.info(chunk)
-
-    src.DB.upload_blob(temp_file)
+    with open("tmp/temp", 'wb') as f:
+        for chunk in message_content.iter_content():
+            current_app.logger.info("logging", str(chunk))
+            f.write(chunk)
+            current_app.logger.info(chunk)
+    with open("tmp/temp", "rb") as f:
+        src.DB.upload_blob(f)
 
 
