@@ -3,7 +3,7 @@ from firebase_admin import credentials, firestore
 from google.cloud import storage
 import json
 import os
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/ServiceAccountSecretKey.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ServiceAccountSecretKey.json"
 '''
 with open('ServiceAccountSecretKey.json') as dataFile:
     data = dataFile.read()
