@@ -52,7 +52,6 @@ def handle_message(event):
         TextSendMessage(text="fuck"))
     with open("tmp/temp", 'wb') as f:
         for chunk in message_content.iter_content():
-            current_app.logger.info("logging", str(chunk))
             f.write(chunk)
             current_app.logger.info(chunk)
     with open("tmp/temp", "rb") as f:
