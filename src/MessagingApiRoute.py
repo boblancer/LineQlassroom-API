@@ -36,6 +36,7 @@ def callback():
     current_app.logger.info("Request body: " + body)
 
     # handle webhook body
+
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
@@ -47,7 +48,7 @@ def callback():
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
-    current_app.logger.info("Content id: " + event.source)
+    current_app.logger.info("Content id: " + str(event.source.userId))
     message_content = line_bot_api.get_message_content(event.message.id)
     line_bot_api.reply_message(
         event.reply_token,
