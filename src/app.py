@@ -5,7 +5,7 @@ from firebase_admin import credentials, firestore
 from google.cloud import storage
 import os
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ServiceAccountSecretKey.json"
-cred = credentials.Certificate("../ServiceAccountSecretKey.json")
+cred = credentials.Certificate("ServiceAccountSecretKey.json")
 default_app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 doc_ref = db.collection(u'metadata').document(u'config')
