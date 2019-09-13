@@ -48,7 +48,7 @@ def callback():
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
-    current_app.logger.info("Content id: " + str(event.source["user"]))
+    current_app.logger.info("Content id: " + str(event.source.user_id))
     message_content: Content = line_bot_api.get_message_content(event.message.id)
     line_bot_api.reply_message(
         event.reply_token,
@@ -73,7 +73,7 @@ def handle_text_message(event):
         event.reply_token,
         TextSendMessage(text="Event "))
     if event.source.userId not in current_app.state:
-        current_app.state["event.source.userId"] = model.CreateHomework()
+        current_app.state[str(event.source.user_id)] = model.CreateHomework()
     dialogflow.detect_intent_texts(project_id, session_id, event.message.text, "th")
 
 
