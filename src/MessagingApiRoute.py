@@ -49,6 +49,7 @@ def callback():
 def handle_message(event):
     current_app.logger.info("Content id: " + event.source.userId)
     message_content = line_bot_api.get_message_content(event.message.id)
+    current_app.logger.info("Fuck " )
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="fuck"))
@@ -71,7 +72,6 @@ def handle_message(event):
         TextSendMessage(text="Event "))
     if event.source.userId not in current_app.state:
         current_app.state["event.source.userId"] = model.CreateHomework()
-
     dialogflow.detect_intent_texts(project_id, session_id, event.message.text, "th")
 
 
