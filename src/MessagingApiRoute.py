@@ -52,7 +52,7 @@ def handle_image_message(event):
     message_content: Content = line_bot_api.get_message_content(event.message.id)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event))
+        TextSendMessage(text=str(event.source.user_id)))
     with open("tmp/temp", 'wb') as f:
         for chunk in message_content.iter_content():
             f.write(chunk)
