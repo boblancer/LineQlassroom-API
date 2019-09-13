@@ -52,23 +52,23 @@ def handle_image_message(event):
     message_content: Content = line_bot_api.get_message_content(event.message.id)
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.to_dict()))
+        TextSendMessage(text=event))
     with open("tmp/temp", 'wb') as f:
         for chunk in message_content.iter_content():
             f.write(chunk)
             current_app.logger.info(chunk)
     with open("tmp/temp", "rb") as f:
         src.DB.upload_blob(f)
-    project_id = "linemessage-qlwfhy"
+    project_id = current_app.dialogflow_project_id
 
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.to_dict()))
-    project_id = "linemessage-qlwfhy"
-    session_id = event.source.userId
+        TextSendMessage(text=event))
+    project_id = current_app.dialogflow_project_id
+    session_id = event.source.user_id
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="Event "))
