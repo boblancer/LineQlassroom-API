@@ -74,7 +74,7 @@ def handle_text_message(event):
     '''
     project_id = "linemessage-qlwfhy"
     session_id = event.source.user_id
-    if str(event.source.userId) not in current_app.state:
+    if str(event.source.user_id) not in current_app.state:
         current_app.state[str(event.source.user_id)] = model.CreateHomework()
     message = dialogflow.detect_intent_texts(project_id, session_id, event.message.text, "th")
     line_bot_api.reply_message(
