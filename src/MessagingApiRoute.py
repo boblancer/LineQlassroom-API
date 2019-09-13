@@ -58,8 +58,8 @@ def handle_image_message(event):
             current_app.logger.info(chunk)
     with open("tmp/temp", "rb") as f:
         public_url = src.DB.upload_blob(f)
-    student_id = current_app.state[str(event.source.user_id)].student_id
-    hw = current_app.state[str(event.source.user_id)].homework_id
+    student_id = current_app.state.session[str(event.source.user_id)].student_id
+    hw = current_app.state.session[str(event.source.user_id)].homework_id
     doc_ref = current_app.db.collection(u'Students').document(student_id).collection(u'HomeworksDetail').document(hw)
     doc_ref.update({"url": public_url})
     project_id = "linemessage-qlwfhy"
@@ -75,7 +75,7 @@ def handle_text_message(event):
     project_id = "linemessage-qlwfhy"
     session_id = event.source.user_id
     if str(event.source.user_id) not in current_app.state:
-        current_app.state[str(event.source.user_id)] = model.CreateHomework()
+        current_app.state.session[str(event.source.user_id)] = model.CreateHomework()
     message = dialogflow.detect_intent_texts(project_id, session_id, event.message.text, "th")
     line_bot_api.reply_message(
         event.reply_token,

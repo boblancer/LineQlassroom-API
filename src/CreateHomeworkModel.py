@@ -12,3 +12,7 @@ class CreateHomework:
 
     def update_homework_id(self, id):
         self.homework_id = id
+
+class State:
+    def __init__(self):
+        session = {}
