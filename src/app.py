@@ -12,7 +12,7 @@ doc_ref = db.collection(u'metadata').document(u'config')
 
 storage = storage.Client()
 bucket = storage.get_bucket("line-qlassroom2019.appspot.com")
-
+state = {}
 app = Flask(__name__)
 app.register_blueprint(src.MessagingApiRoute.app)
 @app.route('/')

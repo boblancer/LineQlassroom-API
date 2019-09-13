@@ -1,6 +1,8 @@
 from flask import Flask , Blueprint, jsonify, abort, request, current_app
 from os import path
 import src.DB
+import src.DialogFlow as dialogflow
+import src.CreateHomeworkModel as model
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -45,7 +47,7 @@ def callback():
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_message(event):
-    current_app.logger.info("Content id: " + event.message.id)
+    current_app.logger.info("Content id: " + event.source.userId)
     message_content = line_bot_api.get_message_content(event.message.id)
     line_bot_api.reply_message(
         event.reply_token,
@@ -56,5 +58,21 @@ def handle_message(event):
             current_app.logger.info(chunk)
     with open("tmp/temp", "rb") as f:
         src.DB.upload_blob(f)
+    project_id = "linemessage-qlwfhy"
+
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    current_app.logger.info("Text Message id: " + event.source.userId)
+    project_id = "linemessage-qlwfhy"
+    session_id = event.source.userId
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text="Event "))
+    if event.source.userId not in current_app.state:
+        current_app.state["event.source.userId"] = model.CreateHomework()
+
+    dialogflow.detect_intent_texts(project_id, session_id, event.message.text, "th")
+
 
 

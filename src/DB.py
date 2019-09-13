@@ -1,12 +1,11 @@
 from flask import current_app
 from google.cloud import exceptions
 
-def upload_blob(source):
+def upload_blob(source, id):
 
-    file_name = "LHQ" + str(get_metadata()["TotalHW"]).zfill(5)
+    file_name = "LHQ" + str(get_metadata()["TotalHW"] + "_" + id).zfill(5)
     image_blob = current_app.bucket.blob(file_name)
     image_blob.upload_from_file(source)
-    increment_homework()
 
 def get_metadata():
     try:
@@ -16,12 +15,9 @@ def get_metadata():
         print(u'No such document!')
 
 
-def increment_homework():
+
+def update_image_public_url():
     try:
-        data = get_metadata()
-        print(data)
-        data["TotalHW"] += 1
-        current_app.doc_ref.set(data)
+        current_app.db.document('Students/61090026/homeworkdetail')
     except exceptions.GoogleCloudError:
         print("cloud error")
-
