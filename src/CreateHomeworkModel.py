@@ -15,4 +15,4 @@ class CreateHomework:
 
 class State:
     def __init__(self):
-        session = {}
+        self.session = {}
