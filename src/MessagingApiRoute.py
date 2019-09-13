@@ -66,12 +66,9 @@ def handle_image_message(event):
 def handle_text_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event))
+        TextSendMessage(text=str(event.message.id)))
     project_id = current_app.dialogflow_project_id
     session_id = event.source.user_id
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text="Event "))
     if event.source.userId not in current_app.state:
         current_app.state[str(event.source.user_id)] = model.CreateHomework()
     dialogflow.detect_intent_texts(project_id, session_id, event.message.text, "th")
