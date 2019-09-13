@@ -62,7 +62,7 @@ def handle_image_message(event):
     hw = current_app.state[str(event.source.user_id)].homework_id
     doc_ref = current_app.db.collection(u'Students').document(student_id).collection(u'HomeworksDetail').document(hw)
     doc_ref.update({"url": public_url})
-    project_id = current_app.dialogflow_project_id
+    project_id = "linemessage-qlwfhy"
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -72,7 +72,7 @@ def handle_text_message(event):
         event.reply_token,
         TextSendMessage(text=str(event.message.text)))
     '''
-    project_id = current_app.dialogflow_project_id
+    project_id = "linemessage-qlwfhy"
     session_id = event.source.user_id
     if str(event.source.userId) not in current_app.state:
         current_app.state[str(event.source.user_id)] = model.CreateHomework()
