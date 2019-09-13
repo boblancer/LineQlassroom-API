@@ -39,7 +39,6 @@ def process_req(request):
 
             totalHW = 0
 
-
             homeworks = current_app.db.collection(u'Students').document(student_id).collection(u'HomeworksDetail') \
                 .where(u'DueDate', u'>=', str(start)).where(u'DueDate', u'<=', str(end)).stream()
 
