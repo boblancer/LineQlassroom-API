@@ -49,10 +49,9 @@ def callback():
 def handle_message(event):
     current_app.logger.info("Content id: " + event.source.userId)
     message_content = line_bot_api.get_message_content(event.message.id)
-    current_app.logger.info("Fuck " )
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="fuck"))
+        TextSendMessage(text=event.to_dict()))
     with open("tmp/temp", 'wb') as f:
         for chunk in message_content.iter_content():
             f.write(chunk)
@@ -64,7 +63,9 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    current_app.logger.info("Text Message id: " + event.source.userId)
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.to_dict()))
     project_id = "linemessage-qlwfhy"
     session_id = event.source.userId
     line_bot_api.reply_message(
