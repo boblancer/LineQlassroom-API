@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, jsonify, abort, request, current_app
 import src.DB
+import json
 import src.DialogFlow as dialogflow
 import src.CreateHomeworkModel as model
 from linebot import (
@@ -127,6 +128,7 @@ def handle_text_message(event):
             ]
         )
     )
+
     rep = {
         "type": "bubble",
         "hero": {
@@ -167,7 +169,7 @@ def handle_text_message(event):
     #     TextSendMessage(text=str(message)))
     line_bot_api.reply_message(
         event.reply_token,
-        jsonify(rep))
+        json.dumps(rep))
 
 
 
