@@ -172,7 +172,7 @@ def handle_text_message(event):
                'Authorization': 'Bearer {}'.format(access_token)}
     data = {
         "replyToken": event.reply_token,
-        "message":[
+        "messages":[
             ast.literal_eval(event.message.text)
         ]
     }
