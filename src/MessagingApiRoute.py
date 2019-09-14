@@ -168,15 +168,15 @@ def handle_text_message(event):
     # line_bot_api.reply_message(
     #     event.reply_token,
     #     TextSendMessage(text=str(message)))
-    headers = {'Content-Type:application/json',
-              'Authorization: Bearer {}'.format(access_token)}
+    headers = {'Content-Type': 'application/json',
+               'Authorization': 'Bearer {}'.format(access_token)}
     data = {
         "replyToken": event.reply_token,
         "message":[
             ast.literal_eval(event.message.text)
         ]
     }
-    r = requests.post('POST https://api.line.me/v2/bot/message/reply', data=data ,headers=headers)
+    r = requests.post('POST https://api.line.me/v2/bot/message/reply', data=data, headers=headers)
 
 
 
