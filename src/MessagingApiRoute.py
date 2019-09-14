@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, jsonify, abort, request, current_app
 import src.DB
 import requests
 import ast
+import json
 import src.DialogFlow as dialogflow
 import src.CreateHomeworkModel as model
 from linebot import (
@@ -178,7 +179,7 @@ def handle_text_message(event):
     }
     print("this is data: ", data)
     print(ast.literal_eval(event.message.text))
-    r = requests.post('https://api.line.me/v2/bot/message/reply', data=data, headers=headers)
+    r = requests.post('https://api.line.me/v2/bot/message/reply', data=json.dumps(data), headers=headers)
 
 
 
