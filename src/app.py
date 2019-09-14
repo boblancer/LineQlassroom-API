@@ -3,8 +3,8 @@ import src.MessagingApiRoute
 import firebase_admin
 from firebase_admin import credentials, firestore
 from google.cloud import storage
-import os
 import src.CreateHomeworkModel
+import os
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ServiceAccountSecretKey.json"
 cred = credentials.Certificate("ServiceAccountSecretKey.json")
 default_app = firebase_admin.initialize_app(cred)
