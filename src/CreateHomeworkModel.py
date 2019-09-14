@@ -4,6 +4,11 @@ class CreateHomework:
         self.student_id = None
         self.public_url = None
 
+    def clear(self):
+        self.homework_id = None
+        self.student_id = None
+        self.public_url = None
+
     def update_student_id(self, id):
         self.student_id = id
 
