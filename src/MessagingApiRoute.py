@@ -176,7 +176,7 @@ def handle_text_message(event):
             ast.literal_eval(event.message.text)
         ]
     }
-    r = requests.post('POST https://api.line.me/v2/bot/message/reply', data=data, headers=headers)
+    r = requests.post('https://api.line.me/v2/bot/message/reply', data=data, headers=headers)
 
 
 
