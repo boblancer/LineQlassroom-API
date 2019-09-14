@@ -127,13 +127,46 @@ def handle_text_message(event):
             ]
         )
     )
-
+    rep = {
+        "type": "bubble",
+        "hero": {
+            "type": "image",
+            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_2_restaurant.png",
+            "size": "full",
+            "aspectRatio": "20:13",
+            "aspectMode": "cover"
+        },
+        "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "spacer",
+                    "size": "xxl"
+                },
+                {
+                    "type": "button",
+                    "style": "primary",
+                    "color": "#905c44",
+                    "action": {
+                        "type": "uri",
+                        "label": "Add to Cart",
+                        "uri": "https://linecorp.com"
+                    }
+                },
+                {
+                    "type": "spacer",
+                    "size": "xxl"
+                }
+            ]
+        }
+    }
     # line_bot_api.reply_message(
     #     event.reply_token,
     #     TextSendMessage(text=str(message)))
     line_bot_api.reply_message(
         event.reply_token,
-        carousel_template_message)
+        rep)
 
 
 
