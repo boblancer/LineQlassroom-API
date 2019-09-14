@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, jsonify, abort, request, current_app
 import src.DB
-import json
+import requests
+import ast
 import src.DialogFlow as dialogflow
 import src.CreateHomeworkModel as model
 from linebot import (
@@ -14,9 +15,9 @@ from linebot.models import (
     ImageMessage, Content, CarouselTemplate, TemplateSendMessage, PostbackAction, CarouselColumn, MessageAction,
     URIAction)
 app = Blueprint('MessagingApiRoute', __name__)
-
-line_bot_api = LineBotApi('XF9eRcyOk/nZd5hmo+e1/l3UL/sFMbaO3r0OHuSm0volMzYLoux5NshVwOdRlAaQBcrzw0h6tHkysVE4GppMm+tSbxRQ'
-                          'EHbE7hZnQpZrwYvZfSgJgL5kG/RQhvDcrljdKSJqMMaV3OdufeCPqWJrAwdB04t89/1O/w1cDnyilFU=')
+access_token = ('XF9eRcyOk/nZd5hmo+e1/l3UL/sFMbaO3r0OHuSm0volMzYLoux5NshVwOdRlAaQBcrzw0h6tHkysVE4GppMm+tSbxRQ'
+                'EHbE7hZnQpZrwYvZfSgJgL5kG/RQhvDcrljdKSJqMMaV3OdufeCPqWJrAwdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi(access_token)
 handler = WebhookHandler('a969bc64bdb41abc6f669c85893463a4')
 
 
@@ -167,9 +168,15 @@ def handle_text_message(event):
     # line_bot_api.reply_message(
     #     event.reply_token,
     #     TextSendMessage(text=str(message)))
-    line_bot_api.reply_message(
-        event.reply_token,
-        json.dumps(rep))
+    headers = {'Content-Type:application/json',
+              'Authorization: Bearer {}'.format(access_token)}
+    data = {
+        "replyToken": event.reply_token,
+        "message":[
+            ast.literal_eval(event.message.text)
+        ]
+    }
+    r = requests.post('POST https://api.line.me/v2/bot/message/reply', data=data ,headers=headers)
 
 
 
