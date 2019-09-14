@@ -81,7 +81,7 @@ def handle_text_message(event):
         current_app.state.session[str(event.source.user_id)] = model.CreateHomework()
     else:
         current_app.state.session[str(event.source.user_id)].clear()
-    message = dialogflow.detect_intent_texts(project_id, session_id, {event.message.text:""}, "th")
+    # message = dialogflow.detect_intent_texts(project_id, session_id, {event.message.text:""}, "th")
     carousel_template_message = TemplateSendMessage(
         alt_text='Carousel template',
         template=CarouselTemplate(
