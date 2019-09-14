@@ -176,7 +176,7 @@ def handle_text_message(event):
             ast.literal_eval(event.message.text)
         ]
     }
-    print(event.message.text)
+    print("this is data: ", data)
     print(ast.literal_eval(event.message.text))
     r = requests.post('https://api.line.me/v2/bot/message/reply', data=data, headers=headers)
 
