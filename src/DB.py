@@ -25,3 +25,4 @@ def update_image_public_url(CreateHomeworkModel):
 
     except exceptions.GoogleCloudError:
         print("cloud error")
+

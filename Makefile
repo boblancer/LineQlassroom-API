@@ -2,7 +2,7 @@ server:
     git add .
     git commit -m "quick commit"
     git push heroku master
-    heroku ps:scale clock=1
+    h
     heroku logs
 
 init:   venv/bin/activate
