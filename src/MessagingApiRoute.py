@@ -82,7 +82,7 @@ def handle_text_message(event):
         current_app.state.session[str(event.source.user_id)] = model.CreateHomework()
     else:
         current_app.state.session[str(event.source.user_id)].clear()
-    # message = dialogflow.detect_intent_texts(project_id, session_id, {event.message.text:""}, "th")
+    message = dialogflow.detect_intent_texts(project_id, session_id, {event.message.text:""}, "th")
     carousel_template_message = TemplateSendMessage(
         alt_text='Carousel template',
         template=CarouselTemplate(
@@ -131,54 +131,15 @@ def handle_text_message(event):
         )
     )
 
-    rep = {
-        "type": "bubble",
-        "hero": {
-            "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_2_restaurant.png",
-            "size": "full",
-            "aspectRatio": "20:13",
-            "aspectMode": "cover"
-        },
-        "footer": {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-                {
-                    "type": "spacer",
-                    "size": "xxl"
-                },
-                {
-                    "type": "button",
-                    "style": "primary",
-                    "color": "#905c44",
-                    "action": {
-                        "type": "uri",
-                        "label": "Add to Cart",
-                        "uri": "https://linecorp.com"
-                    }
-                },
-                {
-                    "type": "spacer",
-                    "size": "xxl"
-                }
-            ]
-        }
-    }
-
-    # line_bot_api.reply_message(
-    #     event.reply_token,
-    #     TextSendMessage(text=str(message)))
     headers = {'Content-Type': 'application/json',
                'Authorization': 'Bearer {}'.format(access_token)}
     data = {
         "replyToken": event.reply_token,
         "messages":[
-            ast.literal_eval(event.message.text)
+            ast.literal_eval(message)
         ]
     }
     print("this is data: ", data)
-    print(ast.literal_eval(event.message.text))
     r = requests.post('https://api.line.me/v2/bot/message/reply', data=json.dumps(data), headers=headers)
 
 
